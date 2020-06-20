@@ -114,12 +114,14 @@ class Ui_MainWindow(object):
         print('=======================================================')
         self.textOut.setText(text)
         # plot.imshow(self.image, cmap='gray', interpolation='bicubic')
-        # plot.show()
+        # plot.show()        
+
+    
 
     def kontrastImage(self):
         contrast = self.kontrastSlider.value() / 1000
         self.label.setText(str(contrast))
-        h, w = self.image2.shape[:2]
+        h, w = self.image2.shape[:2]        
         biner_ZeroTwo = np.zeros((h, w), np.uint8)
         for i in range(h):
             for j in range(w):
