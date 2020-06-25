@@ -114,18 +114,16 @@ class Ui_MainWindow(object):
         print('=======================================================')
         self.textOut.setText(text)
         # plot.imshow(self.image, cmap='gray', interpolation='bicubic')
-        # plot.show()        
-
-    
+        # plot.show()
 
     def kontrastImage(self):
         contrast = self.kontrastSlider.value() / 1000
         self.label.setText(str(contrast))
-        h, w = self.image2.shape[:2]        
+        h, w = self.image2.shape[:2]
         biner_ZeroTwo = np.zeros((h, w), np.uint8)
         for i in range(h):
             for j in range(w):
-                a = self.image2.item(i,j)
+                a = self.image2.item(i, j)
                 b = math.ceil(a * contrast)
                 if b > 255:
                     b = 255
@@ -133,7 +131,7 @@ class Ui_MainWindow(object):
                     b = 0
                 else:
                     b = b
-                biner_ZeroTwo.itemset((i,j), b)
+                biner_ZeroTwo.itemset((i, j), b)
         self.image = biner_ZeroTwo
         self.image3 = biner_ZeroTwo
         print('=====Kontrast=====')
@@ -152,7 +150,7 @@ class Ui_MainWindow(object):
                     a = 0
                 else:
                     a = 255
-                biner_Zero.itemset((i,j), a)
+                biner_Zero.itemset((i, j), a)
         self.image = biner_Zero
         print('=====Biner=====')
         print(self.image[260:265, 350:355])
@@ -171,7 +169,9 @@ class Ui_MainWindow(object):
         gray = np.zeros((h, w), np.uint8)
         for i in range(h):
             for j in range(w):
-                gray[i, j] = np.clip(0.333 * self.image[i, j, 0] + 0.333 * self.image[i, j, 1] + 0.333 * self.image[i, j, 2], 0, 255)
+                gray[i, j] = np.clip(
+                    0.333 * self.image[i, j, 0] + 0.333 * self.image[i, j, 1] +
+                    0.333 * self.image[i, j, 2], 0, 255)
         self.image = gray
         self.image2 = self.image
         print('=====Grayscale=====')
@@ -191,12 +191,13 @@ class Ui_MainWindow(object):
                 qformat = QImage.Format_RGBA8888  # Format_Grayscale8
             else:
                 qformat = QImage.Format_RGB888  # Format_Grayscale16
-        img = QImage(self.image, self.image.shape[1], self.image.shape[0], self.image.strides[0], qformat)
+        img = QImage(self.image, self.image.shape[1], self.image.shape[0],
+                     self.image.strides[0], qformat)
         img2 = QImage()
         img = img.rgbSwapped()
         if windows == 1:
             self.imageOut.setPixmap(QPixmap.fromImage(img))
-            cv.imwrite('temp.png',self.image)
+            cv.imwrite('temp.png', self.image)
 
 
 if __name__ == "__main__":
